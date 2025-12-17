@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Selamat Pernikahan ❤️</title>
+<style>
+    *{
+        margin:0; padding:0; box-sizing:border-box;
+        font-family:'Segoe UI', cursive;
+    }
+    body{
+        height:100vh;
+        background:linear-gradient(135deg,#7b001c,#ff4d6d);
+        overflow:hidden;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    /* Bingkai pengantin */
+    .frame{
+        border:10px solid transparent;
+        padding:25px;
+        border-image:linear-gradient(45deg,#ffd1dc,#fff,#ffd1dc) 1;
+        border-radius:30px;
+        box-shadow:0 0 40px rgba(255,255,255,0.4);
+        background:rgba(255,255,255,0.15);
+        backdrop-filter:blur(6px);
+    }
+
+    .card{
+        text-align:center;
+        color:#fff;
+        padding:30px;
+        border-radius:20px;
+    }
+
+    h1{
+        font-size:34px;
+        letter-spacing:2px;
+        min-height:50px;
+        margin-bottom:20px;
+    }
+
+    .cursor{
+        display:inline-block;
+        width:4px;
+        height:32px;
+        background:#fff;
+        margin-left:5px;
+        animation:blink 1s infinite;
+    }
+
+    @keyframes blink{
+        0%,50%,100%{opacity:1}
+        25%,75%{opacity:0}
+    }
+
+    /* Slideshow foto */
+    .slider{
+        width:300px;
+        height:200px;
+        margin:20px auto;
+        border-radius:20px;
+        overflow:hidden;
+        border:5px solid #fff;
+        box-shadow:0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .slider img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:none;
+    }
+
+    .slider img.active{
+        display:block;
+        animation:fade 2s;
+    }
+
+    @keyframes fade{
+        from{opacity:0}
+        to{opacity:1}
+    }
+
+    /* bunga jatuh */
+    .flower{
+        position:absolute;
+        top:-50px;
+        font-size:24px;
+        animation:fall linear infinite;
+        opacity:0.9;
+    }
+
+    @keyframes fall{
+        from{transform:translateY(0) rotate(0deg)}
+        to{transform:translateY(110vh) rotate(360deg)}
+    }
+
+    audio{
+        margin-top:15px;
+        width:100%;
+    }
+</style>
+</head>
+<body>
+
+<div class="frame">
+    <div class="card">
+        <div id="typing" style="font-size:18px; line-height:1.6; text-align:left; white-space:pre-line;"></div><span class="cursor"></span>
+
+        <div class="slider">
+            <img src="wed1.jpg" class="active">
+            <img src="wed2.jpg">
+            <img src="wed3.jpg">
+        </div>
+
+        
+    <audio id="bgMusic" autoplay loop>
+            <source src="piano-wedding.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+</div>
+<script>
+/* efek mengetik */
+const text = `Selamat menempuh hidup baru ya, sahabatku 🤍
+
+Aku menulis ini dengan perasaan yang sulit dijelaskan—antara bahagia, terharu, dan sedikit kehilangan. Hari ini kamu resmi memulai kehidupan baru, dan aku bersyukur bisa mengenalmu, berjalan di sebagian kecil perjalanan hidupmu, sampai akhirnya kamu tiba di titik seindah ini.
+
+Maaf tidak bisa hadir di jam akadmu. Maaf tidak menyaksikan langsung saat kamu mengucap janji suci dan resmi menjadi istri orang. Jujur, ada rasa sedih karena tidak bisa berada di sana, melihatmu dari dekat, memelukmu, dan bilang kalau aku benar-benar bahagia untukmu 🥲
+
+Terima kasih sudah menjadi teman sebangku yang baik, yang sederhana tapi tulus, yang selalu ada di kenangan-kenangan kecilku. Waktu berjalan cepat, ya… rasanya baru kemarin kita duduk berdampingan, dan sekarang kamu sudah melangkah ke fase hidup yang jauh lebih dewasa.
+
+Semoga pernikahanmu dipenuhi ketenangan dan cinta yang tidak hanya indah, tapi juga kuat. Semoga kalian selalu saling menggenggam saat lelah, saling menguatkan saat dunia terasa berat, dan tumbuh bersama dalam sakinah, mawaddah, warahmah. Semoga Allah selalu menjaga rumah tanggamu dan mengisi hari-hari kalian dengan keberkahan.
+
+Ciee… sekarang pasti lagi dimakeup pengantin ya 🥲
+Gimana rasanya? Deg-degan, terharu, atau air mata yang nggak berhenti jatuh?
+
+Apa pun itu, rasakan sepenuhnya, karena hari ini adalah hari yang akan kamu kenang seumur hidup.
+
+Aku mungkin tidak berdiri di sampingmu hari ini, tapi doaku selalu bersamamu.
+
+Bahagialah selalu, sahabatku 🤍`;
+let i = 0;
+const speed = 100;
+const typing = document.getElementById('typing');
+
+function typeText(){
+    if(i < text.length){
+        typing.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeText, speed);
+    }
+}
+
+typeText();
+
+/* slideshow */
+const slides = document.querySelectorAll('.slider img');
+let index = 0;
+setInterval(() => {
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+}, 3000);
+
+/* bunga jatuh */
+const icons = ['🌹','🌸','💐','❤️'];
+function createFlower(){
+    const f = document.createElement('div');
+    f.className = 'flower';
+    f.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+    f.style.left = Math.random()*100 + 'vw';
+    f.style.animationDuration = (Math.random()*3+4)+'s';
+    f.style.fontSize = (Math.random()*15+20)+'px';
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),7000);
+}
+setInterval(createFlower,300);
+</script>
+
+</body>
+</html>
